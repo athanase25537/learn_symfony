@@ -12,9 +12,12 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
 
     This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/athanos21/Desktop/symfony/my_first_project/src/Controller/UserController.php</code></li>
-        <li>Your template at <code>/home/athanos21/Desktop/symfony/my_first_project/templates/user/index.html.twig</code></li>
-    </ul>
-</div>
+    
+    {% if user %}
+    <p>My name is {{ user.name }}. I have {{ user.age }} years old. My firstname is {{ user.firstname }}.</p>
+    <p><small>Created at : {{ user.createdAt|date('Y-m-d H:i:s') }}</small></p>
+    {% else %}
+    <p>No user founded</p>
+    {% endif %}
+
 {% endblock %}

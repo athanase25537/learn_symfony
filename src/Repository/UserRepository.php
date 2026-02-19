@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,6 +15,22 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function createUser(EntityManager $em, string $name = 'Doe', string $firstname = 'John', int $age = 30, string $email = 'john.doe@example.com')
+    {
+        $user = new User();
+        $user->setName($name);
+        $user->setFirstname($firstname);
+        $user->setAge($age);
+        $user->setEmail($email);
+        $user->setCreatedAt(new \DateTimeImmutable());
+        $user->setUpdatedAt(new \DateTimeImmutable());
+
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
     }
 
     //    /**
