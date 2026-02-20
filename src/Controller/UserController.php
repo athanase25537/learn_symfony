@@ -15,18 +15,28 @@ final class UserController extends AbstractController
 {
 
     #[Route('/', name: 'app_users')]
-    public function main(): Response 
+    public function main(UserRepository $userRepository): Response 
     {
-        return $this->render('user/index.html.twig', ['user' => null]);
+        $users = $userRepository->findAll();
+        return $this->render('user/index.html.twig', [
+            'users' => $users
+        ]);
     }
 
     #[Route('/new-user', name: 'app_new_user')]
-    public function newUser(Request $request): Response 
+    public function newUser(EntityManagerInterface $em, Request $request): Response 
     {
-        $userForm = $request->query->get('user_form');
+        $userForm = $this->createForm(UserType::class);
+        $userForm->handleRequest($request);
+        if($userForm->isSubmitted() && $userForm->isValid()) {
+            $user = $userForm->getData();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('app_users');
+        }
+
         return $this->render('user/new_user.html.twig', [
-            'user_form' => $userForm,
-            'user' => null
+            'user_form' => $userForm
         ]);
     }
 

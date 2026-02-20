@@ -9,11 +9,15 @@
 </style>
 
 <div class="example-wrapper">
-    This friendly message is coming from:
     
-    {% if user %}
-    <p>My name is {{ user.name }}. I have {{ user.age }} years old. My firstname is {{ user.firstname }}.</p>
-    <p><small>Created at : {{ user.createdAt|date('Y-m-d H:i:s') }}</small></p>
+    {% if users %}
+        {% for key, user in users %}
+        <div>
+            <p>User {{ key+1 }} is {{ user.name }}. I have {{ user.age }} years old. My firstname is {{ user.firstname }}.</p>
+            <p><small>Created at : {{ user.createdAt|date('Y-m-d H:i:s') }}</small></p>
+            <hr>
+        </div>
+        {% endfor  %}
     {% else %}
     <p>No user founded</p>
     {% endif %}
