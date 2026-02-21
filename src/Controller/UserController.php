@@ -32,6 +32,7 @@ final class UserController extends AbstractController
             $user = $userForm->getData();
             $em->persist($user);
             $em->flush();
+            $this->addFlash("success", "This is my message");
             return $this->redirectToRoute('app_users');
         }
 

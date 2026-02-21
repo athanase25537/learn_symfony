@@ -9,7 +9,9 @@
 </style>
 
 <div class="example-wrapper">
-    
+    {% for message in app.flashes('success') %}
+    {{ message }}
+    {% endfor %}
     {% if users %}
         {% for key, user in users %}
         <div>
