@@ -13,25 +13,30 @@ class Recipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('recipe.index')]
+    #[Groups(['recipe.index', 'recipe.details'])]
     private ?int $id = null;
 
-    #[Groups('recipe.index')]
+    #[Groups(['recipe.index', 'recipe.details'])]
     #[ORM\Column(length: 255)]
     private ?string $MyRecipe = null;
 
+    #[Groups('recipe.details')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[Groups('recipe.details')]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[Groups('recipe.details')]
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[Groups('recipe.details')]
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[Groups('recipe.details')]
     #[ORM\Column]
     private ?int $duration = null;
 
