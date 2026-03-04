@@ -4,7 +4,6 @@ namespace App\Controller\Api;
 
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class RecipesController extends AbstractController
@@ -13,6 +12,6 @@ final class RecipesController extends AbstractController
     public function index(RecipeRepository $recipeRepository)
     {
         $recipes = $recipeRepository->findAll();
-        return $recipes;
+        return $this->json($recipes);
     }
 }
