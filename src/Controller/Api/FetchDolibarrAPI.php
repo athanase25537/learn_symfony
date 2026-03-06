@@ -3,12 +3,13 @@
 namespace App\Controller\Api;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class FetchDolibarrAPI extends AbstractController
 {
-    #[Route('/api/dolibarr/users/')]
+    #[Route(path: '/api/dolibarr/users/', methods: ["GET"])]
     public function get_users(HttpClientInterface $client)
     {
         $response = $client->request('GET', 'http://localhost:8088/api/index.php/users', [
@@ -36,6 +37,42 @@ final class FetchDolibarrAPI extends AbstractController
         }
 
         return $this->json($users, $response->getStatusCode(), []);
+        // return $this->json($data, $response->getStatusCode(), []);
+    }
+
+    #[Route(path: '/api/dolibarr/users/new/', methods: ["POST"])]
+    public function create_user(HttpClientInterface $client, Request $request)
+    {
+        $response = $client->request('POST', 'http://localhost:8088/api/index.php/users', [
+            'json' => $request->toArray(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'DOLAPIKEY' => 'Q7l1T0nM0OghdoYh1GaYv1XSpS24eT43',
+            ],
+        ]);
+
+        $data = $response->toArray(false);
+
+        return $this->json($data, $response->getStatusCode(), []);
+        // return $this->json($data, $response->getStatusCode(), []);
+    }
+
+    #[Route(path: '/api/dolibarr/login/', methods: ["POST"])]
+    public function login(HttpClientInterface $client, Request $request)
+    {
+        $response = $client->request('POST', 'http://localhost:8088/api/index.php/login', [
+            'json' => $request->toArray(),
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'DOLAPIKEY' => 'Q7l1T0nM0OghdoYh1GaYv1XSpS24eT43',
+            ],
+        ]);
+
+        $data = $response->toArray(false);
+
+        return $this->json($data, $response->getStatusCode(), []);
         // return $this->json($data, $response->getStatusCode(), []);
     }
 }
