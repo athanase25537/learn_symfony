@@ -54,7 +54,6 @@ final class FetchDolibarrAPI extends AbstractController
 
 
         return $this->json($response->getContent(true), $response->getStatusCode(), []);
-        // return $this->json($data, $response->getStatusCode(), []);
     }
 
     #[Route(path: '/api/dolibarr/login/', methods: ["POST"])]
@@ -72,6 +71,5 @@ final class FetchDolibarrAPI extends AbstractController
         $data = $response->toArray(false);
 
         return $this->json($data, $response->getStatusCode(), []);
-        // return $this->json($data, $response->getStatusCode(), []);
     }
 }
