@@ -40,7 +40,7 @@ final class FetchDolibarrAPI extends AbstractController
         // return $this->json($data, $response->getStatusCode(), []);
     }
 
-    #[Route(path: '/api/dolibarr/users/new/', methods: ["POST"])]
+    #[Route(path: '/api/dolibarr/users/new', methods: ["POST"])]
     public function create_user(HttpClientInterface $client, Request $request)
     {
         $response = $client->request('POST', 'http://localhost:8088/api/index.php/users', [
@@ -52,9 +52,8 @@ final class FetchDolibarrAPI extends AbstractController
             ],
         ]);
 
-        $data = $response->toArray(false);
 
-        return $this->json($data, $response->getStatusCode(), []);
+        return $this->json($response->getContent(true), $response->getStatusCode(), []);
         // return $this->json($data, $response->getStatusCode(), []);
     }
 
